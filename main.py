@@ -59,7 +59,7 @@ def main():
     config = Config()
 
     # Attach the custom prompt class
-    config.TerminalInteractiveShell.prompts_class = CustomPrompt
+    # config.TerminalInteractiveShell.prompts_class = CustomPrompt
 
     # Set up the custom input transformer
     # config.TerminalInteractiveShell.ast_transformers = [AutoMagicTransformer()]
@@ -70,8 +70,8 @@ def main():
         config.InteractiveShellApp.exec_lines = f.read()
 
     # Optionally, add other configurations here
-    # config.TerminalInteractiveShell.banner1 = ""
-    # config.TerminalInteractiveShell.banner2 = ""
+    config.TerminalInteractiveShell.banner1 = ""
+    config.TerminalInteractiveShell.banner2 = ""
 
     # Launch IPython with the custom configuration
     start_ipython(config=config)
