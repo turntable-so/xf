@@ -38,31 +38,13 @@ class CustomPrompt(Prompts):
         return [(Token.Prompt, "")]
 
 
-# class AutoMagicTransformer(TransformerManager):
-#     def transform_cell(self, cell: str) -> str:
-#         # List of commands that should automatically be treated as line magics
-#         magic_commands = {"pytest", "time", "timeit"}  # add more as needed
-
-#         # If the cell starts with any of these commands (ignoring whitespace),
-#         # prepend % if it's not already there
-#         stripped = cell.lstrip()
-#         if any(
-#             stripped.startswith(cmd) for cmd in magic_commands
-#         ) and not stripped.startswith("%"):
-#             return f"%{cell}"
-#         return cell
-
-
 def main():
     from traitlets.config import Config
 
     config = Config()
 
     # Attach the custom prompt class
-    # config.TerminalInteractiveShell.prompts_class = CustomPrompt
-
-    # Set up the custom input transformer
-    # config.TerminalInteractiveShell.ast_transformers = [AutoMagicTransformer()]
+    config.TerminalInteractiveShell.prompts_class = CustomPrompt
 
     # Register custom magics when IPython starts
     parent = os.path.dirname(os.path.abspath(__file__))

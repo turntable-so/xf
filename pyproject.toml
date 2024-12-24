@@ -5,7 +5,12 @@ description = "A faster version of pytest that caches imports"
 readme = "README.md"
 authors = [{ name = "Justin Leder", email = "justin@turntable.so" }]
 requires-python = ">=3.9"
-dependencies = ["ipython>=8.18.1", "pytest>=8.3.4"]
+dependencies = [
+    "ipython>=8.18.1",
+    "pytest>=8.3.4",
+    "rich>=13.9.4",
+    "tomlkit>=0.13.2",
+]
 
 [tool.uv]
 managed = true
