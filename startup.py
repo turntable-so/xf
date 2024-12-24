@@ -2,7 +2,7 @@ import io
 from contextlib import redirect_stdout
 
 import IPython
-from IPython.core.magic import register_line_magic
+from IPython.core.magic import Magics, line_magic, magics_class
 
 from main import test
 
@@ -15,17 +15,20 @@ print("\n")
 print("╔════════════════════════════════════════════════════════╗")
 print("║            Pytest-turbo IPython Environment            ║")
 print("║--------------------------------------------------------║")
-print("║ - use %pytest just as you would pytest in the terminal ║")
+print("║ - use pytest just as you normally would                ║")
 print("║ - autoreload is enabled                                ║")
-print("║ - type %pytest --help for more options                 ║")
 print("╚════════════════════════════════════════════════════════╝")
 print("\n")
 
 
-# register pytest line magic
-@register_line_magic
-def pytest(line):
-    return test(line)
+@magics_class
+class PytestMagics(Magics):
+    @line_magic
+    def pytest(self, line):
+        return test(line)
+
+
+ipython.register_magics(PytestMagics)
 
 
 # force pytest to run once with collection only so everything is imported
@@ -35,4 +38,4 @@ with redirect_stdout(stream):
     test("--co")
 
 # set up ipython to start with pytest line magic by default
-ipython.set_next_input("%pytest ")
+ipython.set_next_input("pytest ")
