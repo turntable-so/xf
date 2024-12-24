@@ -1,3 +1,4 @@
+import os
 import shlex
 
 import pytest as _pytest
@@ -64,7 +65,8 @@ def main():
     # config.TerminalInteractiveShell.ast_transformers = [AutoMagicTransformer()]
 
     # Register custom magics when IPython starts
-    with open("startup.py", "r") as f:
+    parent = os.path.dirname(os.path.abspath(__file__))
+    with open(os.path.join(parent, "startup.py"), "r") as f:
         config.InteractiveShellApp.exec_lines = f.read()
 
     # Optionally, add other configurations here
