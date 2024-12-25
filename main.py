@@ -5,7 +5,7 @@ import typer
 from core.isolation import start
 
 
-def main(
+def run(
     selection: Annotated[
         list[str] | None,
         typer.Argument(
@@ -49,9 +49,9 @@ def main(
     start(shell, included, excluded, isolate)
 
 
-def go():
-    typer.run(main)
+def main():
+    typer.run(run)
 
 
 if __name__ == "__main__":
-    go()
+    main()

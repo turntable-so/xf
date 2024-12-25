@@ -30,7 +30,7 @@ dev-dependencies = [
 ]
 
 [project.scripts]
-xf = "main:go"
+xf = "main:main"
 
 [build-system]
 requires = ["hatchling"]
