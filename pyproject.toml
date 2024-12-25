@@ -1,6 +1,6 @@
 [project]
 name = "xf-cli"
-version = "0.1.0"
+version = "0.0.1"
 description = "XF makes repeated python commands faster through import preloading"
 readme = "README.md"
 authors = [{ name = "Justin Leder", email = "justin@turntable.so" }]
