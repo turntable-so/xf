@@ -7,19 +7,27 @@ from commands.base import BaseCommand
 
 class PytestCommand(BaseCommand):
     command = "pytest"
-
-    def check_installed(self):
-        import pytest  # noqa
+    imports = ["pytest"]
 
     def start(self):
         with redirect_stdout(io.StringIO()):
             self.run("--collect")
 
-    def run(self, args_str: str):
+    def _run(self, line: str):
         import pytest
 
-        args = shlex.split(args_str)
+        args = shlex.split(line)
         command = ["--rootdir", ".", *args]
         if "--create-db" not in args:
             command.append("--reuse-db")
             pytest.main(command)
+
+    def run(self, line: str):
+        try:
+            from pytest_django.plugin import DjangoDbBlocker
+
+            django_db_blocker = DjangoDbBlocker(_ispytest=True)
+            with django_db_blocker.unblock():
+                return self._run(line)
+        except ImportError:
+            return self._run(line)

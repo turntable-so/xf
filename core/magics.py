@@ -40,17 +40,16 @@ def build_custom_magics(ipython, included, excluded):
 
         commands.append(c)
 
-        def create_line_magic(subclass):
-            @line_magic
-            def magic_method(self, line):
-                return subclass.run(line)
+        @line_magic
+        def pytest(self, line):
+            return type(instance)().run(line)
 
-            magic_method.__name__ = subclass.command
-
-            return magic_method
+        pytest.__name__ = c
 
         # Attach the newly created line magic to PytestMagics under c.command
-        setattr(PytestMagics, c, create_line_magic(cls))
+        setattr(PytestMagics, c, pytest)
+
+    breakpoint()
 
     ipython.register_magics(PytestMagics)
 

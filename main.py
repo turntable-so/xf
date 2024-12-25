@@ -1,9 +1,8 @@
 from typing import Annotated
 
 import typer
-from IPython import start_ipython
 
-from core.styling import get_ipython_config
+from core.isolation import start
 
 
 def main(
@@ -47,8 +46,7 @@ def main(
             excluded = selection
         else:
             included = selection
-    config = get_ipython_config(shell, included, excluded)
-    ipython = start_ipython(config=config)
+    start(shell, included, excluded, isolate)
 
 
 def go():

@@ -3,8 +3,16 @@ from pathlib import Path
 from tomlkit import parse
 
 
+def get_root_path():
+    return Path(__file__).parent.parent
+
+
+def get_main_path():
+    return get_root_path() / "main.py"
+
+
 def get_pyproject_path():
-    return Path(__file__).parent.parent / "pyproject.toml"
+    return get_root_path() / "pyproject.toml"
 
 
 def get_version():
