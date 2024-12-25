@@ -8,8 +8,9 @@ from commands.base import BaseCommand
 class PytestCommand(BaseCommand):
     command = "pytest"
     imports = ["pytest"]
+    packages = ["pytest"]
 
-    def start(self):
+    def warm(self):
         with redirect_stdout(io.StringIO()):
             self.run("--collect")
 

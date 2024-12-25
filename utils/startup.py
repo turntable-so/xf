@@ -62,7 +62,6 @@ class PytestMagics(Magics):
             instance._check_installed()
         except ImportError:
             continue
-        ipython.register_line_magic(instance.command, instance.run)
 
     @line_magic
     def pytest(self, line):

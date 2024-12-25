@@ -20,7 +20,7 @@ def main(
             help="By default, selected commands are included. Use this option to exclude them instead.",
             is_flag=True,
         ),
-    ] = True,
+    ] = False,
     shell: Annotated[
         bool,
         typer.Option(

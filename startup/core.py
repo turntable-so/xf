@@ -5,20 +5,13 @@ from contextlib import redirect_stdout
 import IPython
 import rich
 from IPython.core.magic import Magics, line_magic, magics_class
-from rich import box
-from rich.console import Console
-from rich.panel import Panel
+from startup.console import build_panel
 from startup.shell_mode import interpret_as_shell
 
 from commands import BaseCommand
 from main import test
-from utils import get_version
 
 stream = io.StringIO()
-
-
-def run_command(command):
-    os.system(command)
 
 
 ipython = IPython.get_ipython()
@@ -32,37 +25,16 @@ ipython.run_line_magic("load_ext", "shell_mode")
 
 
 # Set custom banner
-console = Console()
-content = """\
-[bright_green]•[/] use [bold bright_blue]pytest[/] just as you normally would
-[bright_green]•[/] autoreload is enabled
-[bright_green]•[/] general terminal commands will not work
-[bright_green]•[/] type [bold]exit[/] to exit"""
-
-panel = Panel(
-    content,
-    title="[bold orange1] Pytest-turbo IPython Environment[/]",
-    subtitle=f"[dim]v{get_version()}[/]",  # Add a version or subtle note
-    subtitle_align="right",  # Align subtitle to the right
-    border_style="bright_cyan",
-    box=box.DOUBLE,  # Try box.HEAVY, box.SQUARE, box.ROUNDED, etc.
-    expand=False,  # Width matches content
-    padding=(1, 2),  # Top/bottom = 1, left/right = 2
-)
-
-# Print the panel centered in the terminal
-console.print(panel)
+build_panel()
 
 
 @magics_class
 class PytestMagics(Magics):
     for cls in BaseCommand.__subclasses__():
-        instance = cls()
         try:
-            instance._check_installed()
+            cls._check_installed()
         except ImportError:
             continue
-        ipython.register_line_magic(instance.command, instance.run)
 
     @line_magic
     def pytest(self, line):

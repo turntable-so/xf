@@ -7,11 +7,16 @@ from IPython import start_ipython
 
 from commands import BaseCommand
 from core.styling import get_ipython_config
+from utils.env import set_env
 
 
 def base(shell, included, excluded):
     config = get_ipython_config(shell, included, excluded)
-    return start_ipython(argv=[], config=config)
+    with set_env(
+        SHELL_MODE="true" if shell else "false",
+        COMMAND_JSON=json.dumps({"included": included, "excluded": excluded}),
+    ):
+        return start_ipython(argv=[], config=config)
 
 
 def get_imports_helper(included, excluded):
@@ -19,23 +24,31 @@ def get_imports_helper(included, excluded):
     for cls in BaseCommand.__subclasses__():
         instance = cls()
         if instance.command in included and instance.command not in excluded:
-            imports.extend(instance.imports)
+            imports.extend(instance.packages)
     return imports
 
 
 def start(shell, included, excluded, isolate=False):
     if isolate:
+        if not included and not excluded:
+            raise ValueError(
+                "You must include at least one command when using --isolated"
+            )
         imports = get_imports_helper(included, excluded)
-        invocation = [
-            "uv",
-            "run",
-            "--with",
-            *imports,
-            "--isolated",
-            str(Path(__file__).resolve()),
-            json.dumps({"included": included, "excluded": excluded}),
-            "--bypass",
-        ]
+        invocation = ["uv", "run"]
+        if imports:
+            for import_name in imports:
+                invocation.append("--with")
+                invocation.append(import_name)
+
+        invocation.extend(
+            [
+                "--isolated",
+                str(Path(__file__).resolve()),
+                json.dumps({"included": included, "excluded": excluded}),
+                "--bypass",
+            ]
+        )
         if shell:
             invocation.append("--shell")
         subprocess.run(invocation)

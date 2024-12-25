@@ -1,0 +1,22 @@
+name: Publish to turntable-spoonbill on PYPI
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  build:
+    name: Build distribution 📦
+    runs-on: ubuntu-latest
+    permissions:
+      id-token: write 
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: install uv
+        uses: astral-sh/setup-uv@v5.1.0
+      - name: build
+        run: uv build
+      - name: publish
+        run: uv publish

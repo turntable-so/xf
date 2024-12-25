@@ -3,7 +3,7 @@ from rich import box
 from rich.console import Console
 from rich.panel import Panel
 
-from core.paths import get_version
+from utils.paths import get_version
 
 
 def build_panel(shell_mode=False):
