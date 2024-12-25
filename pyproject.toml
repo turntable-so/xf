@@ -1,25 +1,36 @@
 [project]
-name = "pytest-turbo"
+name = "xf-cli"
 version = "0.1.0"
-description = "A faster version of pytest that caches imports"
+description = "XF makes repeated python commands faster through import preloading"
 readme = "README.md"
 authors = [{ name = "Justin Leder", email = "justin@turntable.so" }]
 requires-python = ">=3.9"
 dependencies = [
     "ipython>=8.18.1",
     "pickleshare>=0.7.5",
-    "pytest>=8.3.4",
+    "pyinstrument>=5.0.0",
     "rich>=13.9.4",
     "tomlkit>=0.13.2",
+    "typer>=0.15.1",
+    "uv>=0.5.11",
 ]
+
+[project.optional-dependencies]
+pytest = ["pytest>=8.3.4"]
+pytest-django = ["pytest>=8.3.4", "pytest-django>=4.9.0"]
+profile = ["pyinstrument>=5.0.0"]
 
 [tool.uv]
 managed = true
 package = true
-dev-dependencies = ["pytest-django>=4.9.0"]
+dev-dependencies = [
+    "pyinstrument>=5.0.0",
+    "pytest>=8.3.4",
+    "pytest-django>=4.9.0",
+]
 
 [project.scripts]
-pt = "main:main"
+xf = "main:go"
 
 [build-system]
 requires = ["hatchling"]
