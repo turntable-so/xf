@@ -349,15 +349,23 @@ dependencies = [
     { name = "ipython", version = "8.31.0", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.10'" },
     { name = "pickleshare" },
     { name = "pyinstrument" },
-    { name = "pytest" },
     { name = "rich" },
     { name = "tomlkit" },
     { name = "typer" },
     { name = "uv" },
 ]
 
+[package.optional-dependencies]
+pytest = [
+    { name = "pytest" },
+]
+pytest-django = [
+    { name = "pytest-django" },
+]
+
 [package.dev-dependencies]
 dev = [
+    { name = "pytest" },
     { name = "pytest-django" },
 ]
 
@@ -366,7 +374,8 @@ requires-dist = [
     { name = "ipython", specifier = ">=8.18.1" },
     { name = "pickleshare", specifier = ">=0.7.5" },
     { name = "pyinstrument", specifier = ">=5.0.0" },
-    { name = "pytest", specifier = ">=8.3.4" },
+    { name = "pytest", marker = "extra == 'pytest'", specifier = ">=8.3.4" },
+    { name = "pytest-django", marker = "extra == 'pytest-django'", specifier = ">=4.9.0" },
     { name = "rich", specifier = ">=13.9.4" },
     { name = "tomlkit", specifier = ">=0.13.2" },
     { name = "typer", specifier = ">=0.15.1" },
@@ -374,7 +383,10 @@ requires-dist = [
 ]
 
 [package.metadata.requires-dev]
-dev = [{ name = "pytest-django", specifier = ">=4.9.0" }]
+dev = [
+    { name = "pytest", specifier = ">=8.3.4" },
+    { name = "pytest-django", specifier = ">=4.9.0" },
+]
 
 [[package]]
 name = "rich"

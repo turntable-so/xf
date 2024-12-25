@@ -9,17 +9,20 @@ dependencies = [
     "ipython>=8.18.1",
     "pickleshare>=0.7.5",
     "pyinstrument>=5.0.0",
-    "pytest>=8.3.4",
     "rich>=13.9.4",
     "tomlkit>=0.13.2",
     "typer>=0.15.1",
     "uv>=0.5.11",
 ]
 
+[project.optional-dependencies]
+pytest = ["pytest>=8.3.4"]
+pytest-django = ["pytest>=8.3.4", "pytest-django>=4.9.0"]
+
 [tool.uv]
 managed = true
 package = true
-dev-dependencies = ["pytest-django>=4.9.0"]
+dev-dependencies = ["pytest>=8.3.4", "pytest-django>=4.9.0"]
 
 [project.scripts]
 xf = "main:go"
