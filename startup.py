@@ -1,4 +1,5 @@
 import io
+import os  # noqa: F401
 from contextlib import redirect_stdout
 
 import IPython
@@ -7,18 +8,27 @@ from IPython.core.magic import Magics, line_magic, magics_class
 from rich import box
 from rich.console import Console
 from rich.panel import Panel
+from startup.shell_mode import interpret_as_shell
 
+from commands import BaseCommand
 from main import test
 from utils import get_version
 
 stream = io.StringIO()
 
 
+def run_command(command):
+    os.system(command)
+
+
 ipython = IPython.get_ipython()
+ipython.input_transformers_post.append(interpret_as_shell)
 ipython.run_line_magic("load_ext", "autoreload")
 ipython.run_line_magic("autoreload", "2")
+ipython.run_line_magic("pprint", "0")
 with redirect_stdout(stream):
-    ipython.run_line_magic("automagic", "on")
+    ipython.run_line_magic("automagic", "off")
+ipython.run_line_magic("load_ext", "shell_mode")
 
 
 # Set custom banner
@@ -46,6 +56,14 @@ console.print(panel)
 
 @magics_class
 class PytestMagics(Magics):
+    for cls in BaseCommand.__subclasses__():
+        instance = cls()
+        try:
+            instance.check_installed()
+        except ImportError:
+            continue
+        ipython.register_line_magic(instance.command, instance.run)
+
     @line_magic
     def pytest(self, line):
         return test(line)

@@ -8,9 +8,12 @@ requires-python = ">=3.9"
 dependencies = [
     "ipython>=8.18.1",
     "pickleshare>=0.7.5",
+    "pyinstrument>=5.0.0",
     "pytest>=8.3.4",
     "rich>=13.9.4",
     "tomlkit>=0.13.2",
+    "typer>=0.15.1",
+    "uv>=0.5.11",
 ]
 
 [tool.uv]
@@ -19,7 +22,7 @@ package = true
 dev-dependencies = ["pytest-django>=4.9.0"]
 
 [project.scripts]
-pt = "main:main"
+xf = "main:go"
 
 [build-system]
 requires = ["hatchling"]
