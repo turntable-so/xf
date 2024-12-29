@@ -12,13 +12,9 @@ class BaseCommand:
     imports: list[str]
     packages: list[str]
 
-    def _check_installed(self):
+    def _import_packages(self):
         for import_name in self.imports:
-            try:
-                __import__(import_name)
-            except ImportError:
-                return False
-        return True
+            __import__(import_name)
 
     def warm(self):
         pass

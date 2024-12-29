@@ -38,4 +38,7 @@ def build_panel(shell_mode=False):
 
 
 def list_available_commands(commands):
-    rich.print(f"Available commands: {commands}")
+    if len(commands) == 0:
+        rich.print("[bold red]No commands found[/]")
+    else:
+        rich.print(f"Available commands: {commands}")

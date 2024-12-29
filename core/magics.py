@@ -1,5 +1,4 @@
 import io
-import warnings
 from contextlib import redirect_stdout
 
 from IPython.core.magic import line_magic
@@ -14,7 +13,6 @@ def base_magics(ipython, commands, shell_mode=True):
     with redirect_stdout(io.StringIO()):
         ipython.run_line_magic("automagic", "off" if shell_mode else "on")
     if shell_mode:
-        ipython.run_line_magic("load_ext", "core.shell_mode")
         ipython.input_transformers_post.append(interpret_as_shell(commands))
 
 
@@ -37,7 +35,7 @@ def populate_custom_magics(base_class, included, excluded, ipython):
             continue
 
         try:
-            instance._check_installed()
+            instance._import_packages()
             instance.warm()
         except ImportError:
             # Skip commands that can't be installed
@@ -52,8 +50,6 @@ def populate_custom_magics(base_class, included, excluded, ipython):
 
         setattr(base_class, c, magic)
 
-    if len(commands) == 0:
-        warnings.warn("No commands found")
-    elif len(commands) == 1:
+    if len(commands) == 1:
         ipython.set_next_input(f"{commands[0]} ")
     return commands

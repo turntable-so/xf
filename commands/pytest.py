@@ -12,7 +12,7 @@ class PytestCommand(BaseCommand):
 
     def warm(self):
         with redirect_stdout(io.StringIO()):
-            self.run("--collect")
+            self.run("--co")
 
     def _run(self, line: str):
         import pytest
@@ -21,7 +21,7 @@ class PytestCommand(BaseCommand):
         command = ["--rootdir", ".", *args]
         if "--create-db" not in args:
             command.append("--reuse-db")
-            pytest.main(command)
+        pytest.main(command)
 
     def run(self, line: str):
         try:
