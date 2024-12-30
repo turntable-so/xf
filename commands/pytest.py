@@ -14,21 +14,21 @@ class PytestCommand(BaseCommand):
         with redirect_stdout(io.StringIO()):
             self.run("--co")
 
-    def _run(self, line: str):
+    def run(self, line: str):
         import pytest
 
         args = shlex.split(line)
         command = ["--rootdir", ".", *args]
-        if "--create-db" not in args:
-            command.append("--reuse-db")
-        pytest.main(command)
 
-    def run(self, line: str):
         try:
             from pytest_django.plugin import DjangoDbBlocker
 
+            if "--create-db" not in args:
+                command.append("--reuse-db")
+
             django_db_blocker = DjangoDbBlocker(_ispytest=True)
+
             with django_db_blocker.unblock():
-                return self._run(line)
+                return pytest.main(command)
         except ImportError:
-            return self._run(line)
+            return pytest.main(command)
