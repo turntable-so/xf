@@ -1,6 +1,6 @@
 import shlex
 
-from commands.base import BaseCommand
+from xf.commands.base import BaseCommand
 
 
 class DbtCommand(BaseCommand):

@@ -30,7 +30,7 @@ dev-dependencies = [
 ]
 
 [project.scripts]
-xf = "main:main"
+xf = "xf.main:main"
 
 [build-system]
 requires = ["hatchling"]

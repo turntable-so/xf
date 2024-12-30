@@ -2,7 +2,7 @@ import io
 import shlex
 from contextlib import redirect_stdout
 
-from commands.base import BaseCommand
+from xf.commands.base import BaseCommand
 
 
 class PytestCommand(BaseCommand):

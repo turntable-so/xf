@@ -1,7 +1,7 @@
 from IPython import get_ipython
 
-from commands.base import TO_PROFILE_ENV, TO_PROFILE_HTML_ENV, BaseCommand
-from utils.env import FALSE, TRUE, set_env
+from xf.commands.base import TO_PROFILE_ENV, TO_PROFILE_HTML_ENV, BaseCommand
+from xf.utils.env import FALSE, TRUE, set_env
 
 
 class ProfileCommand(BaseCommand):

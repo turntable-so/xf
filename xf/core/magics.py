@@ -3,8 +3,8 @@ from contextlib import redirect_stdout
 
 from IPython.core.magic import line_magic
 
-from commands import BaseCommand
-from core.shell_mode import interpret_as_shell
+from xf.commands import BaseCommand
+from xf.core.shell_mode import interpret_as_shell
 
 
 def base_magics(ipython, commands, shell_mode=True):

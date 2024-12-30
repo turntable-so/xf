@@ -4,7 +4,7 @@ from tomlkit import parse
 
 
 def get_root_path():
-    return Path(__file__).parent.parent
+    return Path(__file__).parent.parent.parent
 
 
 def get_main_path():

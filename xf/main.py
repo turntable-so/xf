@@ -2,7 +2,7 @@ from typing import Annotated
 
 import typer
 
-from core.isolation import start
+from xf.core.isolation import start
 
 
 def run(

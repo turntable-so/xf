@@ -1,7 +1,7 @@
 import os
 
-from utils.env import TRUE
-from utils.profiling import pyprofile
+from xf.utils.env import TRUE
+from xf.utils.profiling import pyprofile
 
 TO_PROFILE_ENV = "XF_PROFILING"
 TO_PROFILE_HTML_ENV = "XF_PROFILING_SAVE_HTML"

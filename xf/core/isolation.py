@@ -5,9 +5,9 @@ from pathlib import Path
 
 from IPython import start_ipython
 
-from commands import BaseCommand
-from core.styling import get_ipython_config
-from utils.env import set_env
+from xf.commands import BaseCommand
+from xf.core.styling import get_ipython_config
+from xf.utils.env import set_env
 
 
 def base(shell, included, excluded):

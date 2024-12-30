@@ -1,4 +1,4 @@
-name: Publish to turntable-spoonbill on PYPI
+name: Publish to PYPI
 
 on:
   release:

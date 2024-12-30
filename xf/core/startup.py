@@ -4,10 +4,10 @@ import os  # noqa: F401
 import IPython
 from IPython.core.magic import Magics, magics_class
 
-from core.console import build_panel, list_available_commands
-from core.magics import base_magics, populate_custom_magics
-from core.shell_mode import COMMAND_JSON_ENV, SHELL_MODE_ENV
-from utils.env import TRUE
+from xf.core.console import build_panel, list_available_commands
+from xf.core.magics import base_magics, populate_custom_magics
+from xf.core.shell_mode import COMMAND_JSON_ENV, SHELL_MODE_ENV
+from xf.utils.env import TRUE
 
 # get env variables
 shell_mode = os.getenv(SHELL_MODE_ENV) == TRUE
