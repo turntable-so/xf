@@ -90,9 +90,17 @@ def compress_path(path):
 
     parts = path.split("/")
     # Don't compress the last component
-    compressed = [
-        p[0] if i < len(parts) - 1 and p != "~" else p for i, p in enumerate(parts)
-    ]
+    if len(parts) == 0:
+        return ""
+    compressed = []
+    for i, p in enumerate(parts):
+        if not p:
+            compressed.append(p)
+        elif i < len(parts) - 1 and p != "~":
+            compressed.append(p[0])
+        else:
+            compressed.append(p)
+
     return "/".join(compressed)
 
 
@@ -221,6 +229,3 @@ def get_ipython_config(shell_mode=True, included=[], excluded=[]):
     config.InteractiveShellApp.exec_lines = get_startup_contents(shell_mode)
 
     return config
-
-    # Launch IPython with the custom configuration
-    # start_ipython(config=config)
