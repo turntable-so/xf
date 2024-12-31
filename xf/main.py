@@ -39,6 +39,14 @@ def run(
             is_flag=True,
         ),
     ] = False,
+    with_: Annotated[
+        list[str] | None,
+        typer.Option(
+            "--with",
+            "-w",
+            help="Extra imports to include in the isolated environment.",
+        ),
+    ] = None,
 ):
     included = excluded = []
     if selection:
@@ -46,7 +54,7 @@ def run(
             excluded = selection
         else:
             included = selection
-    start(shell, included, excluded, isolate)
+    start(shell, included, excluded, isolate, with_)
 
 
 def main():

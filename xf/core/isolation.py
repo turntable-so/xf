@@ -28,13 +28,21 @@ def get_imports_helper(included, excluded):
     return imports
 
 
-def start(shell, included, excluded, isolate=False):
+def start(shell, included, excluded, isolate=False, extra_imports=None):
     if isolate:
         if not included and not excluded:
             raise ValueError(
-                "You must include at least one command when using --isolated"
+                "You must include at least one command when using --isolate"
             )
+        for include in included:
+            command = BaseCommand.get_command(include)
+            if command.extras_required_in_isolation_mode and not extra_imports:
+                raise ValueError(
+                    f"Command {include} requires extra imports in isolation mode"
+                )
         imports = get_imports_helper(included, excluded)
+        if extra_imports:
+            imports.extend(extra_imports)
         invocation = ["uv", "run"]
         if imports:
             for import_name in imports:

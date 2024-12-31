@@ -12,6 +12,9 @@ class BaseCommand:
     imports: list[str]
     packages: list[str]
 
+    # True if command requires extra imports in isolation mode
+    extras_required_in_isolation_mode: bool = False
+
     def _import_packages(self):
         for import_name in self.imports:
             __import__(import_name)
@@ -31,3 +34,10 @@ class BaseCommand:
 
             return run(line)
         return self.run(line)
+
+    @classmethod
+    def get_command(cls, command: str):
+        for command_class in cls.__subclasses__():
+            if command_class.command == command:
+                return command_class
+        raise ValueError(f"Command {command} not found")
